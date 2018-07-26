@@ -2,16 +2,16 @@ package com.app.kotlinbasews.ui
 
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.support.v7.app.AppCompatActivity
 import com.app.kotlinbasews.R
+import com.app.kotlinbasews.helper.Functions
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         navigateToLogin()
-
+        setShowBackMessage(false)
     }
 
     private fun navigateToLogin() {
@@ -19,8 +19,7 @@ class SplashActivity : AppCompatActivity() {
         val longestDuration:Long=3000
         var oneTouchTimer = object : CountDownTimer(longestDelay+longestDuration+500,1000){
             override fun onFinish() {
-
-                RootActivity.Builder.create(this@SplashScreenActivity).startActivity()
+                Functions.fireIntent(this@SplashActivity,LoginActivity::class.java,true,true)
             }
             override fun onTick(millisUntilFinished: Long) {
             }

@@ -1,10 +1,6 @@
 package com.app.kotlinbasews.ui
 
-import android.app.Activity
 import android.app.Dialog
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -12,8 +8,8 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import android.util.DisplayMetrics
+import android.widget.Toast
 import com.app.kotlinbasews.R
-import com.app.kotlinbasews.helper.IncompleteBuilderException
 import java.util.*
 
 open class BaseActivity : AppCompatActivity() {
@@ -24,78 +20,6 @@ open class BaseActivity : AppCompatActivity() {
     var doubleBackToExitPressedOnce: Boolean = false
     val dialog: Dialog? = null
 
-    abstract class Builder<T>(private val context: Context) {
-        protected var intent: Intent
-
-        init {
-            intent = createIntent(context)
-        }
-
-        protected abstract fun createIntent(context: Context): Intent
-
-        private fun addBundle(bundle: Bundle): T {
-            intent.extras!!.putAll(bundle)
-            return this as T
-        }
-
-        private fun setFlags(flags: Int): T {
-            intent.flags = flags
-            return this as T
-        }
-
-        private fun addFlags(flags: Int): T {
-            intent.addFlags(flags)
-            return this as T
-        }
-
-        private fun addExtras(extras: Bundle): T {
-            intent.putExtras(extras)
-            return this as T
-        }
-
-        private fun addExtras(extras: Intent): T {
-            intent.putExtras(extras)
-            return this as T
-        }
-
-        private fun setData(data: Uri): T {
-            intent.data = data
-            return this as T
-        }
-
-        fun build(): Intent {
-            if (checkIntentCompleteness()) {
-                return intent
-            }
-            throw IncompleteBuilderException("Not all required intent values provided")
-        }
-
-        protected open fun checkIntentCompleteness(): Boolean {
-            return true
-        }
-
-        fun startActivityAndFinish() {
-            when (context) {
-                is Activity -> {
-                    context.startActivity(intent)
-                    context.finish()
-                }
-            }
-        }
-
-        fun startActivity() {
-            when (context) {
-                is Activity -> context.startActivity(intent)
-            }
-        }
-
-        /*fun startActivityForResult(@RequestCodes.Requests requestCode: Int) {
-            when (context) {
-                is Activity -> context.startActivityForResult(intent, requestCode)
-            }
-        }*/
-
-    }
 
     fun setShowBackMessage(showBackMessage: Boolean) {
         this.showBackMessage = showBackMessage
@@ -171,23 +95,30 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun doubleTapOnBackPress() {
-        if (doubleBackToExitPressedOnce) finish()
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-        return
+        if (doubleBackToExitPressedOnce){
+            finish()
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+            return
+        }
         this.doubleBackToExitPressedOnce = true
+        Toast.makeText(this@BaseActivity, "press back again", Toast.LENGTH_SHORT).show()
         Handler().postDelayed({
             doubleBackToExitPressedOnce = false
         }, 1000)
 
     }
 
+
     override fun onBackPressed() {
         if (fragmentBackStack!!.size <= 1) {
-            if (showBackMessage!!)
+            if (showBackMessage!!) {
                 doubleTapOnBackPress()
+            } else {
+                finish()
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
         } else {
-            finish()
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
         }
     }
 
