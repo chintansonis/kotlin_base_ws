@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/padding_12"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_56"
+        android:hint="@string/hint_email"
+        android:textColorHint="@android:color/darker_gray" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edtPassword"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_56"
+        android:layout_marginTop="@dimen/padding_6"
+        android:hint="@string/hint_email"
+        android:textColorHint="@android:color/darker_gray" />
+
+    <android.support.v7.widget.AppCompatButton
+        style="@style/AlertDialog.AppCompat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_12"
+        android:text="@string/login" />
+
+
+</LinearLayout>

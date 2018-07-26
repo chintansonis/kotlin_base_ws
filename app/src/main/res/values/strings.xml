@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">KotlinBaseWs</string>
+    <string name="hint_email">Please enter email</string>
+    <string name="login">Login</string>
+</resources>
