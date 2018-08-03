@@ -1,7 +1,7 @@
 package com.app.kotlinbasews.api
 
 
-import com.app.kotlinbasews.helper.Constants
+import com.app.kotlinbasews.helper.AppConstants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -21,7 +21,7 @@ class RestClient {
 
         fun getService(): AppApi {
             var retrofit = Retrofit.Builder()
-                    .baseUrl(Constants.getBaseHost())
+                    .baseUrl(AppConstants.getBaseHost())
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(okHttpClient)
                     .build()

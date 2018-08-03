@@ -6,6 +6,7 @@ import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.widget.EditText
 import com.app.kotlinbasews.R
+import com.app.kotlinbasews.custom.MDToast
 import com.app.kotlinbasews.ui.BaseActivity
 import java.util.regex.Pattern
 
@@ -88,6 +89,11 @@ object Functions {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = cm.activeNetworkInfo
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting
+    }
+
+    fun showToast(context: Context, message: String, type: Int) {
+        val mdToast = MDToast.makeText(context, message, MDToast.LENGTH_SHORT, type)
+        mdToast.show()
     }
 
 }

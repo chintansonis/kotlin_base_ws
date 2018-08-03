@@ -1,6 +1,6 @@
 package com.app.kotlinbasews.ui
 
-import android.app.Dialog
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -18,7 +18,7 @@ open class BaseActivity : AppCompatActivity() {
     var fragmentBackStack: Stack<Fragment>? = null
     var showBackMessage: Boolean? = true
     var doubleBackToExitPressedOnce: Boolean = false
-    val dialog: Dialog? = null
+    var dialog: ProgressDialog? = null
 
 
     fun setShowBackMessage(showBackMessage: Boolean) {
@@ -79,7 +79,6 @@ open class BaseActivity : AppCompatActivity() {
             fragment = fragmentBackStack!!.elementAt(fragmentBackStack!!.size - 2)
         else if (!fragmentBackStack!!.isEmpty())
             fragment = fragmentBackStack!!.elementAt(fragmentBackStack!!.size - 1)
-
         var manager: FragmentManager = supportFragmentManager
 
         var ft: FragmentTransaction = manager.beginTransaction()
@@ -119,6 +118,22 @@ open class BaseActivity : AppCompatActivity() {
             }
         } else {
 
+        }
+    }
+
+    fun showProgressDialog(isCancelable: Boolean) {
+        if (dialog != null && dialog?.isShowing!!) {
+            dialog!!.dismiss()
+        }
+        dialog = ProgressDialog(this)
+        dialog!!.setMessage(getString(R.string.msg_please_wait))
+        dialog!!.setCancelable(isCancelable)
+        dialog!!.show()
+    }
+
+    fun hideProgressDialog() {
+        if (dialog != null) {
+            dialog!!.dismiss()
         }
     }
 
